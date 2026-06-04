@@ -1,4 +1,4 @@
-export type TemplateName = 'report' | 'proposal' | 'invoice' | 'docs' | 'minimal';
+export type TemplateName = 'report' | 'proposal' | 'invoice' | 'docs' | 'minimal' | 'resume';
 export type PageSize = 'letter' | 'a4';
 
 export interface ThemeOptions {
@@ -81,12 +81,22 @@ export interface MinimalContent extends BaseContent {
   type: 'minimal';
 }
 
+export interface ResumeContent extends BaseContent {
+  type: 'resume';
+  phone?: string;
+  email?: string;
+  location?: string;
+  website?: string;
+  linkedin?: string;
+}
+
 export type NormalizedContent =
   | ReportContent
   | ProposalContent
   | InvoiceContent
   | DocsContent
-  | MinimalContent;
+  | MinimalContent
+  | ResumeContent;
 
 // ── JSON schema for structured input ──
 

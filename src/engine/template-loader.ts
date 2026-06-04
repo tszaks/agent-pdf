@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url';
 import { join, dirname } from 'path';
 import type {
   NormalizedContent, GenerateOptions, InvoiceContent, DocsContent,
-  ProposalContent, ReportContent,
+  ProposalContent, ReportContent, ResumeContent,
 } from '../types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -134,6 +134,12 @@ export function buildHtml(content: NormalizedContent, opts: GenerateOptions): st
     }
     case 'minimal': {
       base.SUBTITLE = content.subtitle ?? '';
+      break;
+    }
+    case 'resume': {
+      const c = content as ResumeContent;
+      const contactParts = [c.email, c.phone, c.location, c.website, c.linkedin].filter(Boolean);
+      base.CONTACT_LINE = contactParts.join(' &nbsp;·&nbsp; ');
       break;
     }
   }

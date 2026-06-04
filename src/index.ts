@@ -9,7 +9,7 @@ import {
 import { generate } from './generate.js';
 import type { GenerateOptions, TemplateName, PageSize } from './types.js';
 
-const TEMPLATES: TemplateName[] = ['report', 'proposal', 'invoice', 'docs', 'minimal'];
+const TEMPLATES: TemplateName[] = ['report', 'proposal', 'invoice', 'docs', 'minimal', 'resume'];
 const PAGE_SIZES: PageSize[] = ['letter', 'a4'];
 
 function ok(text: string): CallToolResult {
@@ -109,6 +109,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       '🧾 invoice   — Clean professional tabular layout. Inter. Green accent on totals. Best for: billing, contracts, estimates.',
       '📖 docs      — Technical documentation style. Inter + JetBrains Mono. Dark code blocks, TOC. Best for: API docs, guides, READMEs.',
       '✦  minimal   — Pure typography, maximum whitespace. Lora + Inter. Best for: essays, letters, any content type.',
+      '📄 resume    — Tight professional layout. Helvetica Neue. Uppercase section headers, compact spacing. Best for: CVs, resumes.',
     ];
     return ok(descriptions.join('\n'));
   }

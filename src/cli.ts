@@ -67,6 +67,7 @@ program
       ['invoice',  'Clean tabular. Crisp Inter. Billing, estimates, contracts.'],
       ['docs',     'Technical. Code blocks, TOC, dark theme. API docs, guides.'],
       ['minimal',  'Pure typography. Lora + Inter. Essays, letters, anything.'],
+      ['resume',   'Tight professional layout. Inter. Uppercase headers, ATS-friendly. CVs, resumes.'],
     ];
 
     console.log('\n  agent-pdf templates\n');

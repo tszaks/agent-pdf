@@ -39,18 +39,22 @@ export async function renderToPdf(
     // Give font-display a moment to swap in
     await new Promise(r => setTimeout(r, 500));
 
+    // Resume: single-page, no running headers/footers
+    const isResume = opts.template === 'resume';
+
     const pdfBuffer = await page.pdf({
       format: (opts.pageSize === 'a4' ? 'A4' : 'Letter') as 'Letter' | 'A4',
       printBackground: true,
-      displayHeaderFooter: true,
-      headerTemplate: `<div style="width:100%;font-family:sans-serif;font-size:8px;color:#aaa;padding:0 0.75in;box-sizing:border-box;display:flex;justify-content:space-between;">
-        <span class="title"></span>
+      displayHeaderFooter: !isResume,
+      headerTemplate: `<div style="width:100%;font-family:'Helvetica Neue',sans-serif;font-size:7.5px;color:#bbb;padding:6px 0.85in 0;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;">
+        <span class="title" style="letter-spacing:0.3px;"></span>
         <span></span>
       </div>`,
-      footerTemplate: `<div style="width:100%;font-family:sans-serif;font-size:8px;color:#aaa;padding:0 0.75in 4px;box-sizing:border-box;text-align:right;">
-        <span class="pageNumber"></span> / <span class="totalPages"></span>
+      footerTemplate: `<div style="width:100%;font-family:'Helvetica Neue',sans-serif;font-size:7.5px;color:#bbb;padding:0 0.85in 6px;box-sizing:border-box;text-align:right;">
+        <span class="pageNumber"></span>&thinsp;/&thinsp;<span class="totalPages"></span>
       </div>`,
-      margin: { top: '0.75in', bottom: '0.6in', left: '0', right: '0' },
+      // Generous top/bottom margins so header/footer don't overlap body content
+      margin: { top: '0.85in', bottom: '0.65in', left: '0', right: '0' },
     });
 
     writeFileSync(outputPath, pdfBuffer);

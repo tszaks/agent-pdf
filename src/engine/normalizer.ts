@@ -2,7 +2,7 @@ import { marked } from 'marked';
 import type {
   NormalizedContent, TemplateName, JsonInput, InvoiceJsonInput,
   GenericJsonInput, InvoiceContent, ReportContent, ProposalContent,
-  DocsContent, InvoiceLineItem,
+  DocsContent, InvoiceLineItem, ResumeContent,
 } from '../types.js';
 
 // ── Input format detection ───────────────────────────────────────────────────
@@ -126,6 +126,7 @@ function normalizeGenericJson(data: GenericJsonInput, template: TemplateName): N
   switch (template) {
     case 'report': return { ...base, type: 'report', abstract: data.abstract } as ReportContent;
     case 'proposal': return { ...base, type: 'proposal', tagline: data.tagline, preparedFor: data.preparedFor, preparedBy: data.preparedBy } as ProposalContent;
+    case 'resume': return { ...base, type: 'resume' } as ResumeContent;
     case 'docs': {
       const toc = extractToc(bodyHtml);
       return { ...base, type: 'docs', version: data.version, toc } as DocsContent;
@@ -154,18 +155,22 @@ export function normalize(
   }
 
   const rawHtml = format === 'markdown' ? mdToHtml(input) : input;
-  const bodyHtml = template === 'docs' ? addHeadingIds(rawHtml) : rawHtml;
 
-  // Extract title from first h1 if not overridden
+  // Extract title from first h1 and strip it from body (template renders it in the header)
   const h1Match = rawHtml.match(/<h1[^>]*>(.*?)<\/h1>/i);
   const extractedTitle = h1Match ? h1Match[1].replace(/<[^>]+>/g, '') : 'Untitled';
   const title = overrideTitle ?? extractedTitle;
+
+  // Remove the first h1 from body so it doesn't double-render alongside {{TITLE}}
+  const strippedHtml = h1Match ? rawHtml.replace(h1Match[0], '') : rawHtml;
+  const bodyHtml = template === 'docs' ? addHeadingIds(strippedHtml) : strippedHtml;
 
   const base = { title, bodyHtml };
 
   switch (template) {
     case 'report':   return { ...base, type: 'report' };
     case 'proposal': return { ...base, type: 'proposal' };
+    case 'resume':   return { ...base, type: 'resume' };
     case 'invoice':  return { ...base, type: 'invoice', items: [], subtotal: 0, total: 0 } as InvoiceContent;
     case 'docs':     return { ...base, type: 'docs', toc: extractToc(bodyHtml) };
     default:         return { ...base, type: 'minimal' };
