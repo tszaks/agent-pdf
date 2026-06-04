@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Invoice {{INVOICE_NUMBER}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+{{THEME_VARS}}
+<style>
+:root {
+  --color-primary: #0F172A;
+  --color-accent: #10B981;
+  --color-accent-light: #ECFDF5;
+  --color-text: #334155;
+  --color-muted: #94A3B8;
+  --color-border: #E2E8F0;
+  --color-surface: #F8FAFC;
+  --font: 'Inter', system-ui, sans-serif;
+}
+
+@page { size: {{PAGE_SIZE}}; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 9.5pt;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: white;
+  padding: 0.7in 0.8in;
+}
+
+/* ── Top bar ── */
+.top-bar {
+  height: 5px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* ── Invoice header ── */
+.invoice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  padding-top: 8px;
+}
+
+.company-name {
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+}
+
+.company-address {
+  font-size: 8.5pt;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.invoice-meta {
+  text-align: right;
+}
+
+.invoice-number {
+  font-size: 18pt;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.invoice-date, .invoice-due {
+  font-size: 8.5pt;
+  color: var(--color-muted);
+  margin-bottom: 3px;
+}
+
+/* ── Bill to ── */
+.invoice-bill-to {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 36px;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.bill-to-label {
+  font-size: 7pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+}
+
+.bill-to-name {
+  font-size: 10pt;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 3px;
+}
+
+.bill-to-address {
+  font-size: 8.5pt;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* ── Logo ── */
+.logo { max-height: 44px; max-width: 180px; margin-bottom: 8px; display: block; }
+
+/* ── Line items table ── */
+.invoice-items {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  font-size: 9.5pt;
+}
+
+.invoice-items thead tr {
+  background: var(--color-primary);
+  color: white;
+}
+
+.invoice-items th {
+  padding: 10px 14px;
+  font-size: 7.5pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: left;
+}
+
+.invoice-items th.num,
+.invoice-items td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.invoice-items td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.invoice-items tr:last-child td { border-bottom: none; }
+.invoice-items tr:nth-child(even) td { background: var(--color-surface); }
+
+/* ── Totals ── */
+.invoice-totals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 0;
+  border-top: 2px solid var(--color-primary);
+  padding-top: 16px;
+  gap: 6px;
+}
+
+.total-row {
+  display: flex;
+  gap: 48px;
+  font-size: 9.5pt;
+}
+
+.total-row span:last-child {
+  min-width: 100px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.total-row.grand-total {
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-accent-light);
+  padding: 10px 16px;
+  border-radius: 6px;
+}
+
+.total-row.grand-total span:first-child { color: var(--color-accent); }
+
+/* ── Notes ── */
+.invoice-notes {
+  margin-top: 40px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+  font-size: 9pt;
+  color: var(--color-muted);
+}
+
+.invoice-notes strong {
+  display: block;
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+/* ── Body content fallback ── */
+h1 { font-size: 16pt; font-weight: 700; color: var(--color-primary); margin: 20px 0 10px; }
+h2 { font-size: 12pt; font-weight: 600; color: var(--color-primary); margin: 16px 0 8px; }
+p { margin-bottom: 10px; }
+
+/* ── Watermark ── */
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-size: 80pt;
+  font-weight: 700;
+  color: rgba(0,0,0,0.035);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 8px;
+}
+</style>
+</head>
+<body>
+{{WATERMARK}}
+<div class="top-bar"></div>
+
+<div class="logo-wrap">{{LOGO_HTML}}</div>
+
+{{INVOICE_HEADER}}
+
+{{BODY}}
+
+</body>
+</html>

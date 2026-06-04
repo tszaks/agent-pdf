@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{{THEME_VARS}}
+<style>
+:root {
+  --color-primary: #0F2344;
+  --color-accent: #B8962E;
+  --color-text: #1C1C1C;
+  --color-muted: #666;
+  --color-rule: #D4C5A0;
+  --color-bg-light: #F8F6F1;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@page {
+  size: {{PAGE_SIZE}};
+  margin: 0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 10.5pt;
+  line-height: 1.75;
+  color: var(--color-text);
+  background: white;
+}
+
+/* ── Cover Page ── */
+.cover {
+  width: 100%;
+  height: 100vh;
+  background: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0.75in 0.85in 0.75in;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -80px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 80px solid rgba(184, 150, 46, 0.12);
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: 200px;
+  right: 60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 40px solid rgba(184, 150, 46, 0.08);
+}
+
+.cover-logo { margin-bottom: auto; padding-top: 0.75in; }
+.cover-logo img { max-height: 48px; filter: brightness(0) invert(1); opacity: 0.9; }
+
+.cover-rule {
+  width: 60px;
+  height: 3px;
+  background: var(--color-accent);
+  margin-bottom: 24px;
+}
+
+.cover-title {
+  font-family: var(--font-heading);
+  font-size: 36pt;
+  font-weight: 700;
+  color: white;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  max-width: 5.5in;
+}
+
+.cover-subtitle {
+  font-family: var(--font-body);
+  font-size: 13pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 40px;
+  max-width: 5in;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 32px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 20px;
+}
+
+.cover-meta-item { display: flex; flex-direction: column; gap: 3px; }
+.cover-meta-label { font-size: 7pt; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1.5px; }
+.cover-meta-value { font-size: 9.5pt; color: rgba(255,255,255,0.85); }
+
+/* ── Abstract ── */
+.abstract {
+  background: var(--color-bg-light);
+  border-left: 3px solid var(--color-accent);
+  padding: 18px 22px;
+  margin: 0 0 32px;
+  font-size: 10pt;
+  font-style: italic;
+  color: #444;
+}
+
+.abstract strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-style: normal;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-accent);
+  margin-bottom: 8px;
+}
+
+/* ── Body content area ── */
+.content {
+  padding: 0.55in 0.85in;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--color-primary); }
+
+h1 {
+  font-size: 24pt;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  line-height: 1.2;
+  page-break-after: avoid;
+}
+
+h2 {
+  font-size: 16pt;
+  font-weight: 600;
+  margin: 36px 0 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-rule);
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 12pt;
+  font-weight: 600;
+  margin: 24px 0 8px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin: 16px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 8pt;
+}
+
+p { margin-bottom: 14px; text-align: justify; hyphens: auto; }
+
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+a { color: var(--color-primary); text-decoration: underline; text-decoration-color: var(--color-accent); }
+
+/* ── Lists ── */
+ul, ol { margin: 0 0 14px 24px; }
+li { margin-bottom: 5px; }
+li::marker { color: var(--color-accent); }
+
+/* ── Blockquote ── */
+blockquote {
+  border-left: 3px solid var(--color-accent);
+  margin: 20px 0;
+  padding: 12px 20px;
+  background: var(--color-bg-light);
+  font-style: italic;
+  color: #555;
+}
+
+/* ── Code ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  background: var(--color-bg-light);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #c0392b;
+}
+
+pre {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 16px 20px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 16px 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: 9pt;
+  line-height: 1.6;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+th {
+  background: var(--color-primary);
+  color: white;
+  font-family: var(--font-heading);
+  font-size: 8pt;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+td {
+  padding: 9px 14px;
+  border-bottom: 1px solid #E8E4DA;
+}
+
+tr:nth-child(even) td { background: var(--color-bg-light); }
+
+/* ── Watermark ── */
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-family: var(--font-heading);
+  font-size: 72pt;
+  font-weight: 700;
+  color: rgba(0,0,0,0.04);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: 8px;
+}
+
+/* ── Page breaks ── */
+h2 { page-break-before: auto; }
+.section { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+{{WATERMARK}}
+
+<!-- Cover Page -->
+<div class="cover">
+  <div class="cover-logo">{{LOGO_HTML}}</div>
+  <div class="cover-rule"></div>
+  <h1 class="cover-title">{{TITLE}}</h1>
+  {{SUBTITLE}}
+  <div class="cover-meta">
+    {{AUTHOR}}
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Date</span>
+      <span class="cover-meta-value">{{DATE}}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Report Body -->
+<div class="content">
+  {{ABSTRACT}}
+  {{BODY}}
+</div>
+
+</body>
+</html>

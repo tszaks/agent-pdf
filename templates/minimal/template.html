@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+{{THEME_VARS}}
+<style>
+:root {
+  --color-primary: #111;
+  --color-accent: #111;
+  --color-text: #222;
+  --color-muted: #888;
+  --color-border: #E5E5E5;
+  --color-surface: #FAFAFA;
+  --font-heading: 'Lora', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'Courier New', monospace;
+}
+
+@page { size: {{PAGE_SIZE}}; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 10.5pt;
+  line-height: 1.8;
+  color: var(--color-text);
+  background: white;
+}
+
+/* ── Document header ── */
+.doc-header {
+  padding: 0.9in 0.9in 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 28px;
+  margin-bottom: 0;
+}
+
+.logo img { max-height: 36px; margin-bottom: 20px; display: block; }
+
+.doc-title {
+  font-family: var(--font-heading);
+  font-size: 28pt;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+
+.doc-subtitle {
+  font-size: 12pt;
+  font-weight: 300;
+  color: var(--color-muted);
+  margin-bottom: 18px;
+}
+
+.doc-meta {
+  font-size: 8.5pt;
+  color: var(--color-muted);
+  display: flex;
+  gap: 24px;
+}
+
+/* ── Content ── */
+.content {
+  padding: 0.5in 0.9in 0.7in;
+}
+
+/* ── Typography ── */
+h1 {
+  font-family: var(--font-heading);
+  font-size: 22pt;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 44px 0 14px;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+  page-break-after: avoid;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: 15pt;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin: 36px 0 10px;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-family: var(--font-body);
+  font-size: 10.5pt;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 24px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 8pt;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-size: 10pt;
+  font-weight: 500;
+  color: var(--color-muted);
+  margin: 16px 0 6px;
+}
+
+p { margin-bottom: 14px; }
+p + p { text-indent: 0; }
+strong { font-weight: 600; }
+em { font-style: italic; font-family: var(--font-heading); }
+a { color: var(--color-primary); text-decoration: underline; }
+
+/* ── Blockquote ── */
+blockquote {
+  margin: 24px 0;
+  padding: 0 0 0 24px;
+  border-left: 2px solid var(--color-border);
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: #555;
+  font-size: 11pt;
+}
+
+blockquote p { margin-bottom: 0; }
+
+/* ── Lists ── */
+ul { margin: 0 0 14px 0; padding: 0; list-style: none; }
+ul li { padding-left: 16px; position: relative; margin-bottom: 6px; }
+ul li::before { content: '–'; position: absolute; left: 0; color: var(--color-muted); }
+
+ol { margin: 0 0 14px 20px; }
+ol li { margin-bottom: 6px; }
+ol li::marker { color: var(--color-muted); }
+
+/* ── Code ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 9pt;
+  background: var(--color-surface);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: #333;
+}
+
+pre {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin: 16px 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 9pt;
+  line-height: 1.6;
+}
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+}
+
+th {
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--color-primary);
+  text-align: left;
+  color: var(--color-primary);
+}
+
+td { padding: 9px 12px; border-bottom: 1px solid var(--color-border); }
+
+/* ── HR ── */
+hr { border: none; border-top: 1px solid var(--color-border); margin: 28px 0; }
+
+/* ── Watermark ── */
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-size: 80pt;
+  font-weight: 700;
+  color: rgba(0,0,0,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 8px;
+}
+</style>
+</head>
+<body>
+{{WATERMARK}}
+
+<div class="doc-header">
+  <div class="logo">{{LOGO_HTML}}</div>
+  <h1 class="doc-title">{{TITLE}}</h1>
+  <p class="doc-subtitle">{{SUBTITLE}}</p>
+  <div class="doc-meta">
+    <span>{{AUTHOR}}</span>
+    <span>{{DATE}}</span>
+  </div>
+</div>
+
+<div class="content">
+  {{BODY}}
+</div>
+
+</body>
+</html>

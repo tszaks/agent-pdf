@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{{THEME_VARS}}
+<style>
+:root {
+  --color-primary: #1E293B;
+  --color-accent: #3B82F6;
+  --color-accent-light: #EFF6FF;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+  --color-text: #334155;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-surface: #F8FAFC;
+  --color-code-bg: #0F172A;
+  --font: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@page { size: {{PAGE_SIZE}}; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 10pt;
+  line-height: 1.7;
+  color: var(--color-text);
+  background: white;
+}
+
+/* ── Cover / Header page ── */
+.doc-header {
+  background: var(--color-primary);
+  padding: 0.7in 0.8in 0.6in;
+  page-break-after: always;
+  position: relative;
+  overflow: hidden;
+  min-height: 3.5in;
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  background: linear-gradient(135deg, transparent 40%, rgba(59,130,246,0.12) 100%);
+}
+
+.doc-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: auto;
+}
+
+.doc-header .logo { max-height: 32px; filter: brightness(0) invert(1); opacity: 0.85; }
+
+.doc-version {
+  font-size: 8pt;
+  font-weight: 500;
+  color: rgba(255,255,255,0.4);
+  font-family: var(--font-mono);
+}
+
+.doc-header-body { padding-top: 0.5in; }
+
+.doc-header-label {
+  font-size: 7pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.doc-title {
+  font-size: 30pt;
+  font-weight: 700;
+  color: white;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  margin-bottom: 12px;
+}
+
+.doc-subtitle {
+  font-size: 12pt;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  max-width: 4.5in;
+  margin-bottom: 28px;
+}
+
+.doc-meta {
+  display: flex;
+  gap: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.doc-meta-item {
+  font-size: 8.5pt;
+  color: rgba(255,255,255,0.45);
+}
+
+.doc-meta-item strong {
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+/* ── TOC ── */
+.toc {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 0 0.8in 0;
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
+.toc h3 {
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+
+.toc ul { list-style: none; padding: 0; margin: 0; }
+
+.toc li {
+  padding: 4px 0;
+  border-bottom: none;
+}
+
+.toc li a {
+  font-size: 9.5pt;
+  color: var(--color-text);
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.toc li a:hover { color: var(--color-accent); }
+
+.toc li.toc-l2 { padding-left: 16px; }
+.toc li.toc-l3 { padding-left: 32px; }
+
+.toc li.toc-l2 a, .toc li.toc-l3 a {
+  font-size: 9pt;
+  color: var(--color-muted);
+}
+
+/* ── Main content ── */
+.content {
+  padding: 0.5in 0.8in;
+}
+
+/* ── Typography ── */
+h1 {
+  font-size: 22pt;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 40px 0 14px;
+  letter-spacing: -0.5px;
+  page-break-after: avoid;
+}
+
+h2 {
+  font-size: 15pt;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 36px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border);
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 11pt;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin: 24px 0 8px;
+  page-break-after: avoid;
+}
+
+h4 {
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin: 16px 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 8pt;
+}
+
+p { margin-bottom: 12px; }
+strong { font-weight: 600; color: var(--color-primary); }
+a { color: var(--color-accent); text-decoration: none; border-bottom: 1px solid transparent; }
+a:hover { border-bottom-color: var(--color-accent); }
+
+/* ── Code ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--color-accent);
+}
+
+pre {
+  background: var(--color-code-bg);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin: 16px 0;
+  overflow: hidden;
+  page-break-inside: avoid;
+  position: relative;
+}
+
+pre code {
+  font-family: var(--font-mono);
+  font-size: 8.5pt;
+  line-height: 1.65;
+  color: #e2e8f0;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* ── Callout boxes ── */
+blockquote {
+  border-left: none;
+  padding: 14px 18px;
+  margin: 20px 0;
+  border-radius: 6px;
+  font-size: 9.5pt;
+  page-break-inside: avoid;
+  background: var(--color-accent-light);
+  border-left: 4px solid var(--color-accent);
+}
+
+blockquote p { margin-bottom: 0; }
+
+/* ── Info / warning / tip callouts ── */
+.callout-info    { background: var(--color-accent-light); border-left-color: var(--color-accent); }
+.callout-warn    { background: #FFFBEB; border-left-color: var(--color-warning); }
+.callout-danger  { background: #FEF2F2; border-left-color: var(--color-danger); }
+.callout-success { background: #ECFDF5; border-left-color: var(--color-success); }
+
+/* ── Lists ── */
+ul, ol { margin: 0 0 12px 20px; }
+li { margin-bottom: 5px; }
+li::marker { color: var(--color-accent); }
+
+/* ── Tables ── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 9pt;
+  page-break-inside: avoid;
+}
+
+th {
+  background: var(--color-primary);
+  color: white;
+  font-size: 8pt;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+td { padding: 9px 14px; border-bottom: 1px solid var(--color-border); }
+tr:nth-child(even) td { background: var(--color-surface); }
+
+/* ── Watermark ── */
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-size: 80pt;
+  font-weight: 700;
+  color: rgba(0,0,0,0.03);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 8px;
+}
+</style>
+</head>
+<body>
+{{WATERMARK}}
+
+<div class="doc-header">
+  <div class="doc-header-top">
+    <div class="logo">{{LOGO_HTML}}</div>
+    <div class="doc-version">{{VERSION}}</div>
+  </div>
+  <div class="doc-header-body">
+    <div class="doc-header-label">Documentation</div>
+    <h1 class="doc-title">{{TITLE}}</h1>
+    <p class="doc-subtitle">{{SUBTITLE}}</p>
+    <div class="doc-meta">
+      {{AUTHOR}}
+      <span class="doc-meta-item"><strong>Updated</strong> {{DATE}}</span>
+    </div>
+  </div>
+</div>
+
+{{TOC_HTML}}
+
+<div class="content">
+  {{BODY}}
+</div>
+
+</body>
+</html>
