@@ -1,0 +1,66 @@
+name: Bug report
+description: Something in agent-pdf does not work as it should
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please do not paste private documents. A small made-up input that shows the problem is best.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: The exact command or MCP call, and the input (Markdown, JSON or HTML).
+      placeholder: |
+        1. Save this as report.md ...
+        2. Run agent-pdf generate report.md --template report
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: how
+    attributes:
+      label: How are you running it?
+      options:
+        - "CLI"
+        - "MCP server"
+    validations:
+      required: true
+  - type: dropdown
+    id: template
+    attributes:
+      label: Template
+      options:
+        - report
+        - proposal
+        - invoice
+        - docs
+        - minimal
+        - resume
+        - Not template related
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: "20.11.0"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "macOS 26.1"
+    validations:
+      required: true
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Error output, a screenshot of the PDF, or notes.
